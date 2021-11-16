@@ -4,7 +4,7 @@
   "description": "streamX project demo for grant funding.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon server.js"
   },
   "keywords": [
     "live",
@@ -13,6 +13,12 @@
   "author": "streamX",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "socket.io": "^4.3.2",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
