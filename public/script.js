@@ -16,7 +16,6 @@ navigator.mediaDevices.getUserMedia({
   addVideoStream(myVideo, stream)
 
   myPeer.on('call', call => {
-    console.log('sruldeba gana?')
     call.answer(stream)
     const video = document.createElement('video')
     call.on('stream', userVideoStream => {
@@ -41,7 +40,6 @@ myPeer.on('open', id => {
 
 function connectToNewUser(userId, stream) {
   const call = myPeer.call(userId, stream)
-  console.log(call)
   const video = document.createElement('video')
   call.on('stream', userVideoStream => {
     addVideoStream(video, userVideoStream)
@@ -55,7 +53,6 @@ function connectToNewUser(userId, stream) {
 
 function addVideoStream(video, stream) {
   video.srcObject = stream
-  console.log('Stream recieved:', stream)
   video.addEventListener('loadedmetadata', () => {
     video.play()
   })
