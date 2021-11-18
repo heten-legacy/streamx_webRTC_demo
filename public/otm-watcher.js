@@ -7,11 +7,12 @@ const myPeer = new Peer({
 })
 const myVideo = document.createElement('video')
 myVideo.muted = true
+const peers = {}
 
 myPeer.on('open', id => {
 
     socket.emit('join-otm-room', ROOM_ID, id)
-    console.log('sent ment')
+    console.log('Joined')
 })
 
 socket.on('callback', (broadcasterID) => {
@@ -21,15 +22,29 @@ socket.on('callback', (broadcasterID) => {
     })
 })
 
+socket.on('user-otm-assigned', userId => {
+    console.log('user-otm-assigned', userId)
+    console.log(saveReceivingStream)
+    setTimeout(connectToNewUser, 1000, userId, saveReceivingStream)
+})
+
+let saveReceivingStream; 
 myPeer.on('call', call => {
 
     console.log('called')
     call.answer()
     call.on('stream', userVideoStream => {
         console.log('peerjs stream', userVideoStream)
+        saveReceivingStream = userVideoStream.clone();
         addVideoStream(myVideo, userVideoStream)
     })
 })
+
+function connectToNewUser(userId, stream) {
+
+	const call = myPeer.call(userId, stream)
+	peers[userId] = call
+}
 
 function addVideoStream(video, stream) {
 

@@ -17,8 +17,8 @@ navigator.mediaDevices.getUserMedia({
 
 	// addVideoStream(myVideo, stream)
 	//socket.emit('create-room', ROOM_ID, id)
-	socket.on('user-otm-connected', userId => {
-		console.log('user-otm-connected', userId)
+	socket.on('user-otm-assigned', userId => {
+		console.log('user-otm-assigned', userId)
 		// connectToNewUser(userId, stream)
 		setTimeout(connectToNewUser, 1000, userId, stream)
 	})
@@ -30,7 +30,7 @@ myPeer.on('open', id => {
 })
 
 function connectToNewUser(userId, stream) {
-	
+
 	const call = myPeer.call(userId, stream)
 	peers[userId] = call
 }
