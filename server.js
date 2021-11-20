@@ -9,6 +9,8 @@ const tree = new TreeModel()
 const { ExpressPeerServer  } = require('peer')
 const util = require('util')
 
+app.set('port', process.env.PORT || 3000);
+
 const peerServer = ExpressPeerServer(server, {
 	path: '/'
 })
@@ -170,4 +172,4 @@ function sendTree (roomId) {
 	}
 }
 
-server.listen(3000)
+server.listen(process.env.PORT || 3000)
