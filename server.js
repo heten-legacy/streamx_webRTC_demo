@@ -3,13 +3,29 @@ const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 const { v4: uuidV4 } = require('uuid')
-const roomStreamers = {}
-const TreeModel = require('tree-model')
+const roomsData = {}
+const TreeModel = require('./tree')
 const tree = new TreeModel()
 const util = require('util')
 
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
+
+const rt = tree.parse(new Peer('9', '9'))
+rt2 = rt.addChild(tree.parse(new Peer('8', '8')))
+rt3 = rt.addChild(tree.parse(new Peer('7', '7')))
+rt2.addChild(tree.parse(new Peer('6', '6')))
+rt2.addChild(tree.parse(new Peer('5', '5')))
+rt3.addChild(tree.parse(new Peer('4', '4')))
+rt3.addChild(tree.parse(new Peer('3', '3')))
+rt4 = rt3.addChild(tree.parse(new Peer('2', '2')))
+rt4.addChild(tree.parse(new Peer('1', '1')))
+
+function RoomInfo (broadcaster, rootNode, treeView) {
+	this.broadcaster = broadcaster
+	this.rootNode = rootNode
+	this.treeView = treeView
+}
 
 // Handle index
 app.get('/', (req, res) => {
@@ -30,17 +46,29 @@ app.get('/conference/:room', (req, res) => {
 
 // Broadcast routes
 app.get('/otm/broadcast', (req, res) => {
-
 	res.render('otm-broadcaster', { roomId: uuidV4() })
+	// res.render('otm-broadcaster', { roomId: uuidV4() })
+})
+
+// app.get('/otm/tree', (req, res) => {
+
+// 	res.render('tree')
+// })
+
+app.get('/otm/tree/:room', (req, res) => {
+
+	res.render('tree', {roomId: req.params.room})
+})
+
+app.get('/otm/tree/', (req, res) => {
+
+	res.render('tree', {roomId: req.params.room})
 })
 
 app.get('/otm/:room', (req, res) => {
 
 	res.render('otm-watcher', { roomId: req.params.room })
 })
-
-// Room trees
-const roomTrees = {}
 
 // Socket connectivity
 io.on('connection', socket => {
@@ -56,44 +84,84 @@ io.on('connection', socket => {
 	})
 
 	socket.on('join-otm-room', (roomId, userId) => {
-
+		if(!roomsData[roomId]) return
+	
 		socket.join(roomId)
-		const root = roomTrees[roomId]
+		console.log('client', userId, 'joined room:', roomId)
+		const root = roomsData[roomId].rootNode
+		if (!root) return
 
 		const parentCandidate = root.first(function (node) {
-			return node.children.length < 2;
+			return node.children.length < 1;
 		})
 
 		const thisPeer = tree.parse(new Peer(userId, socket.id))
 		parentCandidate.addChild(thisPeer)
 
+		io.to(thisPeer.parent.model.socketId).emit('user-otm-assigned', userId)
 		// let mates = socket.adapter.rooms.get(roomId).size
 		// if (mates == 1) roomStreamers[roomId] = socket.id
-		io.to(thisPeer.parent.model.socketId).emit('user-otm-assigned', userId)
 		// socket.to(roomId).emit('user-connected', userId)
 		// io.to(socket.id).emit('callback', roomStreamers[roomId])
 		// io.to(roomId).emit('callback', socket.adapter.rooms.get(roomId).size)
 
+		sendTree(roomId)
+
 		socket.on('disconnect', () => {
+
 			socket.broadcast.to(roomId).emit('user-disconnected', userId)
+
+			if (thisPeer.children.length) io.to(thisPeer.parent.model.socketId).emit('otm-rearange', thisPeer.children[0].model.peerId)
+			thisPeer.remove()
+			
+			sendTree(roomId)
 		})
 	})
 
 	socket.on('create-otm-room', (roomId, userId) => {
 
-		roomTrees[roomId] = tree.parse(new Peer(userId, socket.id));
+		socket.join(roomId)
 
-		roomStreamers[roomId] = socket.id
-		console.log(roomStreamers)
+		roomsData[roomId] = new RoomInfo(socket.id, tree.parse(new Peer(userId, socket.id)), null)
+
+		sendTree(roomId)
+		
 		socket.on('disconnect', () => {
-			delete roomStreamers[roomId]
+
+			sendTree(roomId)
+			delete roomsData[roomId]
 		})
 	})
 })
 
+
 function Peer (peerId, socketId) {
 	this.peerId = peerId,
 	this.socketId = socketId
+}
+
+function sendTree (roomId) {
+
+	const ourlyTree = ourlyTreeer(roomsData[roomId].rootNode)
+	io.in(roomId).emit('otm-tree-changed', JSON.stringify(ourlyTree))
+	
+	function ourlyTreeer (tree) {
+		
+		const ourlyTree = []
+		tree.walk(function (node) {
+	
+			const ourlyNode = {
+				id: node.model.peerId,
+				parentId: node.isRoot() ? null : node.parent.model.peerId,
+				peer: new Peer(node.model.peerId, node.model.socketId),
+				index: node.getIndex()
+			}
+	
+			ourlyTree.push(ourlyNode)
+		})
+	
+		return ourlyTree
+	}
 }
 
 server.listen(3000)

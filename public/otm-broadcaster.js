@@ -15,6 +15,7 @@ navigator.mediaDevices.getUserMedia({
 	// audio: true
 }).then(stream => {
 
+	console.log(stream.getVideoTracks().values())
 	// addVideoStream(myVideo, stream)
 	//socket.emit('create-room', ROOM_ID, id)
 	socket.on('user-otm-assigned', userId => {
@@ -22,11 +23,18 @@ navigator.mediaDevices.getUserMedia({
 		// connectToNewUser(userId, stream)
 		setTimeout(connectToNewUser, 1000, userId, stream)
 	})
+
+	socket.on('otm-rearange', userId => {
+		console.log('rearanged')
+		setTimeout(connectToNewUser, 1000, userId, stream)
+	})
+	
 })
 
 myPeer.on('open', id => {
 
 	socket.emit('create-otm-room', ROOM_ID, id)
+	console.log('peer', id)
 })
 
 function connectToNewUser(userId, stream) {
