@@ -150,6 +150,7 @@ function Peer (peerId, socketId) {
 
 function sendTree (roomId) {
 
+	if (!roomsData[roomId].rootNode) return
 	const ourlyTree = ourlyTreeer(roomsData[roomId].rootNode)
 	io.in(roomId).emit('otm-tree-changed', JSON.stringify(ourlyTree))
 	

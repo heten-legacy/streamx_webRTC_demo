@@ -2,7 +2,7 @@ const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
 const myPeer = new Peer({
 	host: '/',
-	port: process.env.PORT || 3000,
+	port: window.location.port,
 	debug: true
 })
 
