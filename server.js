@@ -6,7 +6,13 @@ const { v4: uuidV4 } = require('uuid')
 const roomsData = {}
 const TreeModel = require('./tree')
 const tree = new TreeModel()
+const { ExpressPeerServer  } = require('peer')
 const util = require('util')
+
+const peerServer = ExpressPeerServer(server, {
+	path: '/'
+})
+app.use('/', peerServer)
 
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
