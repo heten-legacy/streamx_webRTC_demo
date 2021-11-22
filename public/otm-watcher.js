@@ -7,11 +7,11 @@ const myPeer = new Peer({
 })
 const myVideo = document.createElement('video')
 myVideo.muted = true
-const peers = new Set()
+const peers = new Map()
 
 myPeer.on('open', id => {
 
-    console.log(this)
+    // console.log(this)
 
     socket.emit('join-otm-room', ROOM_ID, id)
     console.log('peer', id)
@@ -19,16 +19,21 @@ myPeer.on('open', id => {
 
 socket.on('user-otm-assigned', userId => {
     console.log('user-otm-assigned', userId)
-    setTimeout(connectToNewUser, 1000, userId, saveReceivingStream)
+    setTimeout(connectToNewUser, 1000, userId, myVideo.srcObject)
 })
 
 socket.on('otm-rearange', userId => {
     console.log('rearanged')
-    setTimeout(connectToNewUser, 1000, userId, saveReceivingStream)
+    setTimeout(connectToNewUser, 1000, userId, myVideo.srcObject)
+})
+
+socket.on('user-disconnected', userId => {
+
+	if (peers[userId]) peers[userId].close()
+    delete peers[userId]
 })
 
 
-let saveReceivingStream; 
 myPeer.on('call', call => {
 
     console.log('called', call)
@@ -45,12 +50,10 @@ myPeer.on('call', call => {
         console.log('Peerjs stream', userVideoStream)
         for (const [key, value] of Object.entries(myPeer.connections)) {
             if (peers.has(key)){
-                console.log(value[0])
                 replaceStream(value[0].peerConnection, userVideoStream)
             }
         }
 
-        if (!saveReceivingStream) saveReceivingStream = userVideoStream;
         addVideoStream(myVideo, userVideoStream)
     })
 })
@@ -74,7 +77,7 @@ function connectToNewUser(userId, stream) {
     
 	const call = myPeer.call(userId, stream)
     console.log('trulala', myPeer.connections)
-	peers.add(userId)
+	peers.set(userId, call)
 }
 
 function addVideoStream(video, stream) {
