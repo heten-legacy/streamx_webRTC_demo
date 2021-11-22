@@ -56,18 +56,23 @@ myPeer.on('call', call => {
 })
 
 function replaceStream(peerConnection, mediaStream) {
-    for(sender of peerConnection.getSenders()){
-        if(sender.track.kind == "audio") {
-            if(mediaStream.getAudioTracks().length > 0){
-                sender.replaceTrack(mediaStream.getAudioTracks()[0]);
+    try {
+        for(sender of peerConnection.getSenders()){
+            if(sender.track.kind == "audio") {
+                if(mediaStream.getAudioTracks().length > 0){
+                    sender.replaceTrack(mediaStream.getAudioTracks()[0]);
+                }
+            }
+            if(sender.track.kind == "video") {
+                if(mediaStream.getVideoTracks().length > 0){
+                    sender.replaceTrack(mediaStream.getVideoTracks()[0]);
+                }
             }
         }
-        if(sender.track.kind == "video") {
-            if(mediaStream.getVideoTracks().length > 0){
-                sender.replaceTrack(mediaStream.getVideoTracks()[0]);
-            }
-        }
+    } catch (err) {
+        console.error(err)
     }
+    
 }
 
 function connectToNewUser(userId, stream) {
