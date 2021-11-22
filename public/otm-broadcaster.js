@@ -31,6 +31,12 @@ navigator.mediaDevices.getUserMedia({
 	
 })
 
+socket.on('user-disconnected', userId => {
+
+	if (peers[userId]) peers[userId].close()
+	delete peers[userId]
+})
+
 myPeer.on('open', id => {
 
 	socket.emit('create-otm-room', ROOM_ID, id)
