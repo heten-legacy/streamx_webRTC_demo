@@ -19,16 +19,6 @@ app.use('/', peerServer)
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
-const rt = tree.parse(new Peer('9', '9'))
-rt2 = rt.addChild(tree.parse(new Peer('8', '8')))
-rt3 = rt.addChild(tree.parse(new Peer('7', '7')))
-rt2.addChild(tree.parse(new Peer('6', '6')))
-rt2.addChild(tree.parse(new Peer('5', '5')))
-rt3.addChild(tree.parse(new Peer('4', '4')))
-rt3.addChild(tree.parse(new Peer('3', '3')))
-rt4 = rt3.addChild(tree.parse(new Peer('2', '2')))
-rt4.addChild(tree.parse(new Peer('1', '1')))
-
 function RoomInfo (broadcaster, rootNode, treeView) {
 	this.broadcaster = broadcaster
 	this.rootNode = rootNode
@@ -150,7 +140,7 @@ function Peer (peerId, socketId) {
 
 function sendTree (roomId) {
 
-	if (!roomsData[roomId].rootNode) return
+	if (!roomsData[roomId]) return
 	const ourlyTree = ourlyTreeer(roomsData[roomId].rootNode)
 	io.in(roomId).emit('otm-tree-changed', JSON.stringify(ourlyTree))
 	
