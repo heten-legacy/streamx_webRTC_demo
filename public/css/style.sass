@@ -1,0 +1,197 @@
+@import _font-face.scss
+@include font-face(Lovelo, '../fonts/Lovelo-Black', 100, null, ttf)
+
+$color-one: #725AC1
+$color-two: #202030
+$color-three: #FFEECF
+$color-four: #B0D7FF
+$color-five: #4BB3FD
+$color-six: #3B00FF
+$color-seven: #24164B
+$color-eight: #BCA8FF
+
+$color-error: #FF595E
+
+$break-height: 530px
+$break-width-s: 360px
+$break-width-m: 640px
+$break-width-ml: 840px
+$break-width-l: 1024px
+$break-width-xls: 1240px
+$break-width-xl: 1400px
+
+$bezier: cubic-bezier(.17,.67,.83,.67)
+
+.outline
+	outline: 1px solid red
+
+html
+	width: 100%
+	height: 100%
+
+body
+	margin: 0
+	padding: 0
+	font-family: Ubuntu, Roboto, Verdana
+	font-size: 16px
+	color: #FFFFFF
+	background-color: $color-seven
+	height: 100%
+	width: 100%
+	overflow-x: hidden
+
+.titler
+	font-family: Lovelo
+
+h1
+	font-size: 126px
+	font-weight: normal
+	margin-top: 10px
+	margin-bottom: 30px
+	text-align: center
+	&.second
+		font-size: 48px
+		margin-bottom: 50px
+
+.stx-wrapper
+	height: 100%
+	width: 100%
+	display: flex
+	justify-content: center
+	align-items: center
+
+.ssg
+	position: absolute
+	left: 50%
+	transform: translateX(-50%)
+	z-index: -1
+
+#ssg-1
+	width: 100%
+	top: -53%
+	left: 46%
+	&.second
+		transform: translateX(-50%) rotate(273deg)
+		width: 80%
+		top: auto
+		bottom: -70%
+		left: -5%
+
+#ssg-2
+	width: 52%
+	top: -60%
+	left: 68%
+	transform: translateX(-50%) rotate(117deg)
+	filter: blur(4px)
+	&.second
+		width: 56%
+		top: -64%
+		transform: translateX(-50%)
+		top: -68%
+
+.stx-main-cont
+	// Homepage
+	display: flex
+	width: 40%
+	justify-content: center
+	align-items: center
+	margin-top: 160px
+
+	.stx-central > p
+		text-align: center
+
+	#choose-demo
+		margin-top: 70px
+
+	#demo-choose-block
+		margin-top: 45px
+		margin-bottom: 80px
+		display: flex
+		flex-direction: row
+		justify-content: center
+		align-items: flex-end
+		#demo-choose-left
+			text-align: right
+		#demo-choose-left, #demo-choose-right
+			cursor: pointer
+		#demo-choose-divider
+			height: 200px
+			width: 1px
+			margin: 0 50px
+			background-color: #fff
+		div	p
+			width: 200px
+			font-size: 14px
+			color: $color-eight
+
+	// Room
+	&.second
+		margin-top: 0
+		width: 60%
+	
+	.stx-video-row
+		width: 100%
+		display: flex
+	
+	#video-grid
+		display: inline-grid
+		grid-template-columns: auto auto auto
+		width: 100%
+		justify-content: center
+		&.third
+			width: 70%
+
+	.video-grid-item
+		padding: 10px
+		&.selected video
+			box-shadow: #FFEECF 0px 0px 20px
+	
+	video
+		width: 100%
+		height: 100%
+		border-radius: 5px
+		object-fit: cover
+
+	.stx-tree
+		height: 100%
+		width: 25%
+		margin-left: 5%
+	
+	.tree-title
+		text-align: center
+		font-weight: 500
+
+	.stx-room-panel
+		display: flex
+		flex-direction: row
+		margin-top: 60px
+
+	.stx-room-info-block
+		max-width: 400px
+		padding: 0 50px
+		position: relative
+		flex: 1 0 0
+		p, h2
+			font-size: 14px
+			margin: 5px 0
+		h2
+			font-size: 22px
+		.block-info
+			margin-top: 10px
+			color: $color-eight
+			font-size: 12px
+		&::before
+			content: ''
+			position: absolute
+			left: 0
+			width: 1px
+			top: 10%
+			height: 80%
+			background-color: $color-one
+		&:first-child::before
+				top: -20%
+				height: 140%
+				background-color: #fff
+
+.copy
+	cursor: pointer

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <title>StreamX Demo Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="stx-wrapper">
+        <div class="stx-main-cont">
+            <div class="stx-central">
+                <h1 class="titler">StreamX</h1>
+                <p>Welcome to StreamX WebRTC Demo Hub</p>
+                <p id="choose-demo">Choose a demo below</p>
+                <div id="demo-choose-block">
+                    <div id="demo-choose-left">
+                        <h2>Confr X</h2>
+                        <p>
+                            Online conference <br>
+                            with our singaling server
+                        </p>
+                    </div>
+                    <div id="demo-choose-divider"></div>
+                    <div id="demo-choose-right">
+                        <h2>OnetoX</h2>
+                        <p>
+                            Scalable one to <br>
+                            many live streaming room
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <svg class="ssg" id="ssg-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1751.588" height="1317.471" viewBox="0 0 1751.588 1317.471">
+        <defs>
+            <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.5" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#4bb3fd"/>
+            <stop offset="0.527" stop-color="#4bb3fd"/>
+            <stop offset="1" stop-color="#351c84"/>
+            </radialGradient>
+        </defs>
+        <path id="Path_6" data-name="Path 6" d="M462.958,506.007c17.025,82.286,1018.642,856.908,1336.436,621.4s283.744-419.942,0-385.892-400.08,314.956-601.538,93.636,235.508-680.986-87.961-675.311-576,14.187-624.237,124.848S445.933,423.721,462.958,506.007Z" transform="matrix(0.978, 0.208, -0.208, 0.978, -196.086, -249.759)" fill="url(#radial-gradient)"/>
+    </svg>
+    <svg class="ssg" id="ssg-2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1751.588" height="1317.471" viewBox="0 0 1751.588 1317.471">
+        <defs>
+            <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.5" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#4bb3fd"/>
+            <stop offset="0.527" stop-color="#4bb3fd"/>
+            <stop offset="1" stop-color="#351c84"/>
+            </radialGradient>
+        </defs>
+        <path id="Path_6" data-name="Path 6" d="M462.958,506.007c17.025,82.286,1018.642,856.908,1336.436,621.4s283.744-419.942,0-385.892-400.08,314.956-601.538,93.636,235.508-680.986-87.961-675.311-576,14.187-624.237,124.848S445.933,423.721,462.958,506.007Z" transform="matrix(0.978, 0.208, -0.208, 0.978, -196.086, -249.759)" fill="url(#radial-gradient)"/>
+    </svg>
+
+    <script>
+        document.getElementById('demo-choose-left').onclick = function() {
+            window.location.href = '/conference'
+        }
+        document.getElementById('demo-choose-right').onclick = function() {
+            window.location.href = '/otm/broadcast'
+        }
+    </script>
+    
+</body>
+</html>

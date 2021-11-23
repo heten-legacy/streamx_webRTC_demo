@@ -2,6 +2,7 @@ const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
 const myPeer = new Peer({
     host: '/',
+    path: '/peerjs',
     port: window.location.port,
     debug: true
 })
@@ -19,12 +20,12 @@ myPeer.on('open', id => {
 
 socket.on('user-otm-assigned', userId => {
     console.log('user-otm-assigned', userId)
-    setTimeout(connectToNewUser, 1000, userId, myVideo.srcObject)
+    setTimeout(connectToNewUser, 1400, userId, myVideo.srcObject)
 })
 
 socket.on('otm-rearange', userId => {
     console.log('rearanged')
-    setTimeout(connectToNewUser, 1000, userId, myVideo.srcObject)
+    setTimeout(connectToNewUser, 1400, userId, myVideo.srcObject)
 })
 
 socket.on('user-disconnected', userId => {
@@ -87,9 +88,15 @@ function connectToNewUser(userId, stream) {
 
 function addVideoStream(video, stream) {
 
+    const gridItem = document.createElement('div')
+	gridItem.className = 'video-grid-item'
+
+
     video.srcObject = stream
     video.addEventListener('loadedmetadata', () => {
         video.play()
     })
-    videoGrid.append(video)
+    
+    gridItem.append(video)
+	videoGrid.append(gridItem)
 }

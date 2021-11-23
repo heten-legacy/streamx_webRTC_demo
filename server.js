@@ -11,10 +11,8 @@ const util = require('util')
 
 app.set('port', process.env.PORT || 3000);
 
-const peerServer = ExpressPeerServer(server, {
-	path: '/'
-})
-app.use('/', peerServer)
+const peerServer = ExpressPeerServer(server, {})
+app.use('/peerjs', peerServer)
 
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
@@ -28,7 +26,7 @@ function RoomInfo (broadcaster, rootNode, treeView) {
 // Handle index
 app.get('/', (req, res) => {
 
-	res.redirect(`/conference/${uuidV4()}`)
+	res.render('home')
 })
 
 // Conference routes

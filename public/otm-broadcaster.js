@@ -2,6 +2,7 @@ const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
 const myPeer = new Peer({
 	host: '/',
+	path: '/peerjs',
 	port: window.location.port,
 	debug: true
 })
@@ -21,12 +22,12 @@ navigator.mediaDevices.getUserMedia({
 	socket.on('user-otm-assigned', userId => {
 		console.log('user-otm-assigned', userId)
 		// connectToNewUser(userId, stream)
-		setTimeout(connectToNewUser, 1000, userId, stream)
+		setTimeout(connectToNewUser, 1400, userId, stream)
 	})
 
 	socket.on('otm-rearange', userId => {
 		console.log('rearanged')
-		setTimeout(connectToNewUser, 1000, userId, stream)
+		setTimeout(connectToNewUser, 1400, userId, stream)
 	})
 	
 })
