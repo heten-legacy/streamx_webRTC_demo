@@ -12,6 +12,11 @@ myVideo.muted = true
 const peers = {}
 
 document.getElementById('stream-share-url').textContent = window.location.href;
+document.getElementById('stream-share-url').onclick = function () {
+
+	alert('The room URL was copied to you clipboard.')
+	navigator.clipboard.writeText(window.location.href);
+}
 
 myPeer.on('open', peerId => {
 
@@ -19,7 +24,7 @@ myPeer.on('open', peerId => {
 		video: true,
 		// audio: true
 	}).then(stream => {
-		addVideoStream(myVideo, stream)
+		addVideoStream(myVideo, stream, true)
 
 		console.log('resolved')
 
@@ -47,6 +52,8 @@ myPeer.on('open', peerId => {
 		if (peers[userId]) peers[userId].close()
 	})
 
+	document.getElementById('stream-peer-id').textContent = peerId
+
 })
 
 function connectToNewUser(userId, stream) {
@@ -65,10 +72,11 @@ function connectToNewUser(userId, stream) {
 	peers[userId] = call
 }
 
-function addVideoStream(video, stream) {
+function addVideoStream(video, stream, selected) {
 
 	const gridItem = document.createElement('div')
 	gridItem.className = 'video-grid-item'
+	if (selected) gridItem.className = 'video-grid-item selected'
 
 	video.srcObject = stream
 	video.addEventListener('loadedmetadata', () => {

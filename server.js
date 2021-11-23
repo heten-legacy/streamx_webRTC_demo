@@ -11,7 +11,9 @@ const util = require('util')
 
 app.set('port', process.env.PORT || 3000);
 
-const peerServer = ExpressPeerServer(server, {})
+const peerServer = ExpressPeerServer(server, {
+	host: '/'
+})
 app.use('/peerjs', peerServer)
 
 app.set('view engine', 'ejs')

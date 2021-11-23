@@ -6,15 +6,23 @@ const myPeer = new Peer({
     port: window.location.port,
     debug: true
 })
+
 const myVideo = document.createElement('video')
 myVideo.muted = true
 const peers = new Map()
 
-myPeer.on('open', id => {
+const roomUrl = window.location.href.replace(/\/[^\/]*$/, '/' + ROOM_ID)
+document.getElementById('stream-share-url').textContent = roomUrl;
+document.getElementById('stream-share-url').onclick = function () {
 
-    // console.log(this)
+	alert('The room URL was copied to you clipboard.')
+	navigator.clipboard.writeText(roomUrl);
+}
 
-    socket.emit('join-otm-room', ROOM_ID, id)
+myPeer.on('open', peerId => {
+
+    socket.emit('join-otm-room', ROOM_ID, peerId)
+    document.getElementById('stream-peer-id').textContent = peerId
     console.log('peer', id)
 })
 
@@ -55,7 +63,7 @@ myPeer.on('call', call => {
             }
         }
 
-        addVideoStream(myVideo, userVideoStream)
+        addVideoStream(myVideo, userVideoStream, true)
     })
 })
 
@@ -86,17 +94,17 @@ function connectToNewUser(userId, stream) {
 	peers.set(userId, call)
 }
 
-function addVideoStream(video, stream) {
+function addVideoStream(video, stream, selected) {
 
-    const gridItem = document.createElement('div')
+	const gridItem = document.createElement('div')
 	gridItem.className = 'video-grid-item'
+	if (selected) gridItem.className = 'video-grid-item selected'
 
+	video.srcObject = stream
+	video.addEventListener('loadedmetadata', () => {
+		video.play()
+	})
 
-    video.srcObject = stream
-    video.addEventListener('loadedmetadata', () => {
-        video.play()
-    })
-    
-    gridItem.append(video)
+	gridItem.append(video)
 	videoGrid.append(gridItem)
 }

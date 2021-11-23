@@ -204,7 +204,6 @@ h1.second {
 
 .stx-main-cont .stx-tree {
   height: 100%;
-  width: 25%;
   margin-left: 5%;
 }
 
@@ -221,7 +220,7 @@ h1.second {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  margin-top: 60px;
+  margin-top: 80px;
 }
 
 .stx-main-cont .stx-room-info-block {
@@ -262,6 +261,30 @@ h1.second {
   top: -20%;
   height: 140%;
   background-color: #fff;
+}
+
+.tf-custom {
+  overflow: visible;
+}
+
+.tf-custom .tf-nc {
+  background-color: #3B00FF;
+  border: none !important;
+  padding: 0;
+  border-radius: 100px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.tf-custom .tf-nc:before,
+.tf-custom .tf-nc:after {
+  border-left-color: #FFEECF !important;
+  border-left-width: 2px;
+}
+
+.tf-custom li li:before {
+  border-top-color: #FFEECF !important;
+  border-top-width: 2px;
 }
 
 .copy {

@@ -154,7 +154,7 @@ h1
 
 	.stx-tree
 		height: 100%
-		width: 25%
+		// width: 25%
 		margin-left: 5%
 	
 	.tree-title
@@ -164,7 +164,7 @@ h1
 	.stx-room-panel
 		display: flex
 		flex-direction: row
-		margin-top: 60px
+		margin-top: 80px
 
 	.stx-room-info-block
 		max-width: 400px
@@ -192,6 +192,26 @@ h1
 				top: -20%
 				height: 140%
 				background-color: #fff
+
+// Style tree
+.tf-custom
+	overflow: visible
+.tf-custom .tf-nc
+	background-color: $color-six
+	border: none!important
+	padding: 0
+	border-radius: 100px
+	text-align: center
+	cursor: pointer
+
+.tf-custom .tf-nc:before,
+.tf-custom .tf-nc:after 
+	border-left-color: $color-three!important
+	border-left-width: 2px
+
+.tf-custom li li:before
+	border-top-color: $color-three!important
+	border-top-width: 2px
 
 .copy
 	cursor: pointer

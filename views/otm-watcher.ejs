@@ -2,8 +2,13 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <title>StreamX Demo Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
 	<script>
 		const ROOM_ID = "<%= roomId %>"
 	</script>
@@ -13,24 +18,72 @@
 	<link href="https://unpkg.com/treeflex/dist/css/treeflex.css" rel="stylesheet">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js" defer></script>
 	<script src="/tree.js" defer></script>
-	<title>StreamX Demo</title>
-	<style>
-		#video-grid {
-			display: grid;
-			grid-template-columns: repeat(auto-fill, 300px);
-			grid-auto-rows: 300px;
-		}
-		
-		video {
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-		}
-	</style>
 </head>
 <body>
-	<div id="video-grid"></div>
-	You are Watching bro!
-	<div id="tree-container" class="tf-tree"></div>
+	<div class="stx-wrapper">
+        <div class="stx-main-cont second">
+            <div class="stx-central">
+                <h1 id="goHome" class="titler second copy">StreamX</h1>
+                <div class="stx-video-row">
+                    <div id="video-grid" class="third"></div>
+                    <div class="stx-tree">
+                        <p class="tree-title">Signaling under the hood</p>
+                        <div class="tree-content">
+							<div id="tree-container" class="tf-tree tf-custom"></div>
+						</div>
+                    </div>
+                </div>
+                <div class="stx-room-panel">
+                    <div class="stx-room-info-block">
+                        <h2 class="block-title">Stream ID</h2>
+                        <p class="block-subtitle copy"><%= roomId %></p>
+                        <p class="block-info">
+                            This is your unique room id,<br>
+                            with which you can share the room
+                        </p>
+                    </div>
+                    <div class="stx-room-info-block">
+                        <p class="block-subtitle">Share with participants</p>
+                        <h2 class="block-title">Copy URL Below</h2>
+						<p class="block-info copy" id="stream-share-url"></p>
+                    </div>
+                    <div class="stx-room-info-block">
+                        <h2 class="block-title">Your User ID</h2>
+                        <p class="block-subtitle copy" id="stream-peer-id"></p>
+                        <p class="block-info">
+                            Your unique user id<br>
+                            in the room
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <svg class="ssg second" id="ssg-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1751.588" height="1317.471" viewBox="0 0 1751.588 1317.471">
+        <defs>
+            <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.5" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#4bb3fd"/>
+            <stop offset="0.527" stop-color="#4bb3fd"/>
+            <stop offset="1" stop-color="#351c84"/>
+            </radialGradient>
+        </defs>
+        <path id="Path_6" data-name="Path 6" d="M462.958,506.007c17.025,82.286,1018.642,856.908,1336.436,621.4s283.744-419.942,0-385.892-400.08,314.956-601.538,93.636,235.508-680.986-87.961-675.311-576,14.187-624.237,124.848S445.933,423.721,462.958,506.007Z" transform="matrix(0.978, 0.208, -0.208, 0.978, -196.086, -249.759)" fill="url(#radial-gradient)"/>
+    </svg>
+    <svg class="ssg second" id="ssg-2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1751.588" height="1317.471" viewBox="0 0 1751.588 1317.471">
+        <defs>
+            <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.5" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#4bb3fd"/>
+            <stop offset="0.527" stop-color="#4bb3fd"/>
+            <stop offset="1" stop-color="#351c84"/>
+            </radialGradient>
+        </defs>
+        <path id="Path_6" data-name="Path 6" d="M462.958,506.007c17.025,82.286,1018.642,856.908,1336.436,621.4s283.744-419.942,0-385.892-400.08,314.956-601.538,93.636,235.508-680.986-87.961-675.311-576,14.187-624.237,124.848S445.933,423.721,462.958,506.007Z" transform="matrix(0.978, 0.208, -0.208, 0.978, -196.086, -249.759)" fill="url(#radial-gradient)"/>
+    </svg>
+
+    <script>
+        document.getElementById('goHome').onclick = function() {
+            window.location.href = '/'
+        }
+    </script>
 </body>
 </html>
