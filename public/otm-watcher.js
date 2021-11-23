@@ -23,7 +23,7 @@ myPeer.on('open', peerId => {
 
     socket.emit('join-otm-room', ROOM_ID, peerId)
     document.getElementById('stream-peer-id').textContent = peerId
-    console.log('peer', id)
+    console.log('peer', peerId)
 })
 
 socket.on('user-otm-assigned', userId => {
