@@ -45,7 +45,6 @@ socket.on('user-disconnected', userId => {
 
 myPeer.on('call', call => {
 
-    console.log('called', call)
     call.answer()
     // console.log('trulala', myPeer.connections[0].getSenders())
     // myPeer.connections[Object.keys(myPeer.connections)[0]][0].peerConnection.getSenders()
@@ -55,7 +54,8 @@ myPeer.on('call', call => {
     // const rtcrtpconnection = myPeer.connections[Object.keys(myPeer.connections)[0]][0].peerConnection
     
     call.on('stream', userVideoStream => {
-        
+
+        console.log('sanders basket', call.peerConnection.getTransceivers())
         console.log('Peerjs stream', userVideoStream)
         for (const [key, value] of Object.entries(myPeer.connections)) {
             if (peers.has(key)){
@@ -69,6 +69,7 @@ myPeer.on('call', call => {
 
 function replaceStream(peerConnection, mediaStream) {
     try {
+        console.log('j', peerConnection)
         for(sender of peerConnection.getSenders()){
             if(sender.track.kind == "audio") {
                 if(mediaStream.getAudioTracks().length > 0){
@@ -90,7 +91,8 @@ function replaceStream(peerConnection, mediaStream) {
 function connectToNewUser(userId, stream) {
     
 	const call = myPeer.call(userId, stream)
-    console.log('trulala', myPeer.connections)
+    // console.log('trulala', myPeer.connections)
+    // console.log('trulala2', myPeer.connections[0].getSenders())
 	peers.set(userId, call)
 }
 
