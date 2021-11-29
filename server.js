@@ -68,6 +68,12 @@ app.get('/otm/:room', (req, res) => {
 	res.render('otm-watcher', { roomId: req.params.room })
 })
 
+// Polygon route
+app.get('/polygon', (req, res) => {
+
+	res.render('polygon')
+})
+
 // Socket connectivity
 io.on('connection', socket => {
 

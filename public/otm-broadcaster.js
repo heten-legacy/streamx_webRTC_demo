@@ -31,13 +31,14 @@ myPeer.on('open', peerId => {
 		// addVideoStream(myVideo, stream)
 		socket.on('user-otm-assigned', userId => {
 			console.log('user-otm-assigned', userId)
-			// connectToNewUser(userId, stream)
-			setTimeout(connectToNewUser, 1000, userId, stream)
+			connectToNewUser(userId, stream)
+			// setTimeout(connectToNewUser, 1000, userId, stream)
 		})
 
 		socket.on('otm-rearange', userId => {
 			console.log('rearanged')
-			setTimeout(connectToNewUser, 1000, userId, stream)
+			// setTimeout(connectToNewUser, 1000, userId, stream)
+			connectToNewUser(userId, stream)
 		})
 		
 	})

@@ -19,6 +19,15 @@ document.getElementById('stream-share-url').onclick = function () {
 	navigator.clipboard.writeText(roomUrl);
 }
 
+// webcam
+let webcam;
+navigator.mediaDevices.getUserMedia({
+    video: true,
+    // audio: true
+}).then(function(stream){
+    webcam = stream
+})
+
 myPeer.on('open', peerId => {
 
     socket.emit('join-otm-room', ROOM_ID, peerId)
@@ -28,12 +37,14 @@ myPeer.on('open', peerId => {
 
 socket.on('user-otm-assigned', userId => {
     console.log('user-otm-assigned', userId)
-    setTimeout(connectToNewUser, 1400, userId, myVideo.srcObject)
+    // console.log(myVideo.srcObject)
+    connectToNewUser(userId, myVideo.srcObject)
 })
 
 socket.on('otm-rearange', userId => {
     console.log('rearanged')
-    setTimeout(connectToNewUser, 1400, userId, myVideo.srcObject)
+    // console.log(myVideo.srcObject)
+    connectToNewUser(userId, myVideo.srcObject)
 })
 
 socket.on('user-disconnected', userId => {
@@ -41,7 +52,6 @@ socket.on('user-disconnected', userId => {
 	if (peers[userId]) peers[userId].close()
     delete peers[userId]
 })
-
 
 myPeer.on('call', call => {
 
@@ -55,7 +65,6 @@ myPeer.on('call', call => {
     
     call.on('stream', userVideoStream => {
 
-        console.log('sanders basket', call.peerConnection.getTransceivers())
         console.log('Peerjs stream', userVideoStream)
         for (const [key, value] of Object.entries(myPeer.connections)) {
             if (peers.has(key)){
@@ -65,7 +74,29 @@ myPeer.on('call', call => {
 
         addVideoStream(myVideo, userVideoStream, true)
     })
+
+
+    // Pertaxa find me
+    // ai ar ra anu
+    // ar shveba close-ze 
+    // da raghacas arasworad vidzaxebt mgoni
+    // eg rom naxo tu shedzleb dghes itogshi :D 
+    call.on('close', () => {
+    
+        console.log('daqoluza')
+    })
+
 })
+
+document.getElementById('replica').onclick = replica
+function replica(){
+
+    for (const [key, value] of Object.entries(myPeer.connections)) {
+        if (peers.has(key)){
+            replaceStream(value[0].peerConnection, webcam)
+        }
+    }
+}
 
 function replaceStream(peerConnection, mediaStream) {
     try {
