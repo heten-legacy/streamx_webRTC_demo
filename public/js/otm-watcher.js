@@ -88,16 +88,6 @@ myPeer.on('call', call => {
 
 })
 
-document.getElementById('replica').onclick = replica
-function replica(){
-
-    for (const [key, value] of Object.entries(myPeer.connections)) {
-        if (peers.has(key)){
-            replaceStream(value[0].peerConnection, webcam)
-        }
-    }
-}
-
 function replaceStream(peerConnection, mediaStream) {
     try {
         console.log('j', peerConnection)

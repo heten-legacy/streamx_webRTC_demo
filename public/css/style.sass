@@ -13,7 +13,8 @@ $color-eight: #BCA8FF
 $color-error: #FF595E
 
 $break-height: 530px
-$break-width-s: 360px
+$break-width-s: 360px 
+$break-width-sm: 480px 
 $break-width-m: 640px
 $break-width-ml: 840px
 $break-width-l: 1024px
@@ -59,6 +60,7 @@ h1
 	display: flex
 	justify-content: center
 	align-items: center
+	overflow-x: hidden
 
 .ssg
 	position: absolute
@@ -96,6 +98,25 @@ h1
 	justify-content: center
 	align-items: center
 	margin-top: 160px
+	@media screen and (max-width: $break-width-xls)
+		width: 90%
+		h1.titler
+			font-size: 60px
+		.stx-central > p
+			font-size: 12px
+		#demo-choose-block
+			align-items: center!important
+			flex-direction: column!important
+		#demo-choose-left
+			margin-bottom: 25px
+		#demo-choose-divider
+			display: none
+		#demo-choose-left, #demo-choose-right
+			text-align: center!important
+
+	.stx-central
+		max-height: 90vh
+		max-width: 100%
 
 	.stx-central > p
 		text-align: center
@@ -128,10 +149,16 @@ h1
 	&.second
 		margin-top: 0
 		width: 60%
+		@media screen and (max-width: $break-width-xls)
+			width: 80%
+		@media screen and (max-width: $break-width-m)
+			width: 90%
 	
 	.stx-video-row
 		width: 100%
 		display: flex
+		@media screen and (max-width: $break-width-m)
+			flex-direction: column
 	
 	#video-grid
 		display: inline-grid
@@ -140,11 +167,16 @@ h1
 		justify-content: center
 		&.third
 			width: 70%
+			@media screen and (max-width: $break-width-m)
+				width: 100%
+		@media screen and (max-width: $break-width-l)
+			grid-template-columns: auto auto
+		@media screen and (max-width: $break-width-sm)
+			grid-template-columns: auto
 
 	.video-grid-item
 		padding: 10px
 		min-width: 33%
-		width: 500px
 		&.selected video
 			box-shadow: #FFEECF 0px 0px 20px
 	
@@ -156,8 +188,17 @@ h1
 
 	.stx-tree
 		height: 100%
-		// width: 25%
 		margin-left: 5%
+		position: relative
+		@media screen and (max-width: $break-width-m)
+			margin: 30px 0 50px 0
+
+	@media screen and (max-width: $break-width-m)
+		.tree-content
+			position: absolute
+			left: 50%
+			width: 80%
+			transform: translateX(-50%)
 	
 	.tree-title
 		text-align: center
@@ -167,12 +208,17 @@ h1
 		display: flex
 		flex-direction: row
 		margin-top: 80px
+		width: 100%
+		@media screen and (max-width: $break-width-ml)
+			flex-direction: column
 
 	.stx-room-info-block
 		max-width: 400px
 		padding: 0 50px
 		position: relative
 		flex: 1 0 0
+		@media screen and (max-width: $break-width-ml)
+			margin-bottom: 70px
 		p, h2
 			font-size: 14px
 			margin: 5px 0
